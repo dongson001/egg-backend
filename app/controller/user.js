@@ -26,7 +26,7 @@ class UserController extends Controller {
     } else {
       ctx.body = {
         code: 500,
-        message: '用户名或者密码错误'
+        message: '用户名或者密码错误',
       };
     }
   }
@@ -35,25 +35,34 @@ class UserController extends Controller {
     const user = await ctx.service.user.find();
     ctx.body = {
       code: 0,
-      data: user
-    }
+      data: user,
+    };
   }
   async add() {
     const { ctx } = this;
     const data = ctx.request.body;
     console.log('userAdd params  ', data);
+    const user = await ctx.service.user.findUserByName(data.name);
+    console.log('user', user);
+    if (user.user) {
+      ctx.body = {
+        message: '添加失败,用户名已被占用',
+        code: 500,
+      };
+      return;
+    }
     const result = await ctx.service.user.addUser(data);
-    console.log('userAdd result:', result)
+    console.log('userAdd result:', result);
     const insertSuccess = result.affectedRows === 1;
-    if(insertSuccess){
+    if (insertSuccess) {
       ctx.body = {
         message: '添加成功',
-        code: 0
+        code: 0,
       };
-    }else {
+    } else {
       ctx.body = {
         message: '添加失败',
-        code: 500
+        code: 500,
       };
     }
   }

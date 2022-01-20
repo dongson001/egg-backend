@@ -11,14 +11,16 @@ class UserService extends Service {
   }
   async findUserByName(name) {
     const user = await this.app.mysql.get('user_info', {
-      name 
+      name,
     });
     return { user };
   }
   async addUser(data) {
     const user = await this.app.mysql.insert('user_info', {
       name: data.name,
-      pass: data.pass 
+      pass: data.pass,
+      update_time: new Date(),
+      create_time: new Date(),
     });
     return user;
   }
