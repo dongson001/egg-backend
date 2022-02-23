@@ -8,7 +8,8 @@ class UserController extends Controller {
     const data = ctx.request.body;
     console.log('login params  ', data);
     const user = await ctx.service.user.findUserByName(data.name);
-    if (user?.user.pass === data.pass) {
+    console.log('user:', user)
+    if (user?.user?.pass === data.pass) {
       const token = app.jwt.sign(
         {
           nickname: data.name,
