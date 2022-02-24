@@ -34,10 +34,12 @@ class UserController extends Controller {
   async index() {
     const { ctx } = this;
     const user = await ctx.service.user.find();
-    ctx.body = {
-      code: 0,
-      data: user,
-    };
+    if(user?.user){
+      ctx.body = {
+        code: 0,
+        data: user.user[0]
+      };
+    }
   }
   async add() {
     const { ctx } = this;
