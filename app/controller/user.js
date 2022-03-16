@@ -81,8 +81,14 @@ class UserController extends Controller {
   }
   async list() {
     const { ctx } = this;
-    const user = await ctx.service.user.find();
-    ctx.body = user;
+    const data = ctx.request.body;
+    console.log('list params  ', data);
+    const user = await ctx.service.user.list(data);
+    console.log('user:', user)
+    ctx.body = {
+      list: user.results,
+      totalCount: 10
+    };
   }
 }
 

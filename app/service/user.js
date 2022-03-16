@@ -24,6 +24,20 @@ class UserService extends Service {
     });
     return user;
   }
+  async list(data) {
+    const results = await this.app.mysql.select('user_info', {
+      // 搜索 user_info 表
+      // where: { status: 'draft', author: ['author1', 'author2'] }, // WHERE 条件
+      // columns: ['author', 'title'], // 要查询的表字段
+      // orders: [
+      //   ['created_at', 'desc'],
+      //   ['id', 'desc'],
+      // ], // 排序方式
+      limit: data.pageInfo.pageSize || 10, // 返回数据量
+      offset: data.pageInfo.pageNum - 1 || 0, // 数据偏移量
+    });
+    return { results };
+  }
 }
 
 module.exports = UserService;
