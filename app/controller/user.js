@@ -84,10 +84,15 @@ class UserController extends Controller {
     const data = ctx.request.body;
     console.log('list params  ', data);
     const user = await ctx.service.user.list(data);
+    const userCount = await ctx.service.user.listCount();
+    console.log('userCount:', userCount)
     console.log('user:', user)
     ctx.body = {
-      list: user.results,
-      totalCount: 10
+      code: 0,
+      data : {
+        list: user.results,
+        totalCount: userCount[0]["count(*)"]
+      }
     };
   }
 }

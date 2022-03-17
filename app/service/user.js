@@ -33,11 +33,16 @@ class UserService extends Service {
       //   ['created_at', 'desc'],
       //   ['id', 'desc'],
       // ], // 排序方式
-      limit: data.pageInfo.pageSize || 10, // 返回数据量
-      offset: data.pageInfo.pageNum - 1 || 0, // 数据偏移量
+      limit: data.pageInfo?.pageSize || 10, // 返回数据量
+      offset: data.pageInfo?.pageNum - 1 || 0, // 数据偏移量
     });
     return { results };
   }
+  async listCount() {
+    const user = await this.app.mysql.query('select count(*) from user_info', '');
+    return user;
+  }
+  
 }
 
 module.exports = UserService;
