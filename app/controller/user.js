@@ -1,6 +1,6 @@
 'use strict'; // eslint-disable-line
 
-const Controller = require('egg').Controller;
+const { Controller } = require('egg');
 
 class UserController extends Controller {
   async login() {
@@ -8,8 +8,9 @@ class UserController extends Controller {
     const data = ctx.request.body;
     console.log('login params  ', data);
     const user = await ctx.service.user.findUserByName(data.name);
-    console.log('user:', user)
-    if (user?.user?.pass === data.pass) { // eslint-disable-line
+    console.log('user:', user);
+    if (user.pass === data.pass) {
+      // eslint-disable-line
       const token = app.jwt.sign(
         {
           nickname: data.name,
@@ -31,16 +32,18 @@ class UserController extends Controller {
       };
     }
   }
+
   async index() {
     const { ctx } = this;
     const user = await ctx.service.user.find();
-    if(user?.user){
+    if (user) {
       ctx.body = {
         code: 0,
-        data: user.user[0]
+        data: user.user[0],
       };
     }
   }
+
   async add() {
     const { ctx } = this;
     const data = ctx.request.body;
@@ -69,30 +72,33 @@ class UserController extends Controller {
       };
     }
   }
+
   async update() {
     const { ctx } = this;
     const user = await ctx.service.user.find();
     ctx.body = user;
   }
+
   async delete() {
     const { ctx } = this;
     const user = await ctx.service.user.find();
     ctx.body = user;
   }
+
   async list() {
     const { ctx } = this;
     const data = ctx.request.body;
     console.log('list params  ', data);
     const user = await ctx.service.user.list(data);
     const userCount = await ctx.service.user.listCount();
-    console.log('userCount:', userCount)
-    console.log('user:', user)
+    console.log('userCount:', userCount);
+    console.log('user:', user);
     ctx.body = {
       code: 0,
-      data : {
+      data: {
         list: user.results,
-        totalCount: userCount[0]["count(*)"]
-      }
+        totalCount: userCount[0]['count(*)'],
+      },
     };
   }
 }

@@ -1,20 +1,20 @@
-// app/service/user.js
-
 'use strict'; // eslint-disable-line
 
-const Service = require('egg').Service;
+const { Service } = require('egg');
 
 class UserService extends Service {
   async find() {
     const user = await this.app.mysql.query('select * from user_info', '');
-    return { user };
+    return user;
   }
+
   async findUserByName(name) {
     const user = await this.app.mysql.get('user_info', {
       name,
     });
-    return { user };
+    return user;
   }
+
   async addUser(data) {
     const user = await this.app.mysql.insert('user_info', {
       name: data.name,
@@ -24,6 +24,7 @@ class UserService extends Service {
     });
     return user;
   }
+
   async list(data) {
     const results = await this.app.mysql.select('user_info', {
       // 搜索 user_info 表
@@ -33,16 +34,19 @@ class UserService extends Service {
       //   ['created_at', 'desc'],
       //   ['id', 'desc'],
       // ], // 排序方式
-      limit: data.pageInfo?.pageSize || 10, // 返回数据量
-      offset: data.pageInfo?.pageNum - 1 || 0, // 数据偏移量
+      limit: data.pageInfo.pageSize || 10, // 返回数据量
+      offset: data.pageInfo.pageNum - 1 || 0, // 数据偏移量
     });
     return { results };
   }
+
   async listCount() {
-    const user = await this.app.mysql.query('select count(*) from user_info', '');
+    const user = await this.app.mysql.query(
+      'select count(*) from user_info',
+      ''
+    );
     return user;
   }
-  
 }
 
 module.exports = UserService;
