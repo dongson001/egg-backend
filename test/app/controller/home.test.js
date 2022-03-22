@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // eslint-disable-line
 
 const { app, assert } = require('egg-mock/bootstrap');
 

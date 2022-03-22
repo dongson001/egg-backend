@@ -1,11 +1,11 @@
-'use strict';
+'use strict'; // eslint-disable-line
 
-const Controller = require('egg').Controller;
+const { Controller } = require('egg');
 
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    
+
     ctx.body = 'hi, egg';
   }
 }

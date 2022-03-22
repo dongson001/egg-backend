@@ -1,6 +1,4 @@
-/* eslint valid-jsdoc: "off" */
-
-'use strict';
+'use strict'; // eslint-disable-line
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -10,6 +8,7 @@ module.exports = appInfo => {
    * built-in config
    * @type {Egg.EggAppConfig}
    **/
+  // eslint-disable-next-line
   const config = exports = {};
 
   // use for cookie sign key, should change to your own and keep security
@@ -40,7 +39,7 @@ module.exports = appInfo => {
     // 是否加载到 agent 上，默认关闭
     agent: false,
   };
-  
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
@@ -48,7 +47,7 @@ module.exports = appInfo => {
       csrf: {
         enable: false,
       },
-    }
+    },
   };
 
 

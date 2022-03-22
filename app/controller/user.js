@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // eslint-disable-line
 
 const Controller = require('egg').Controller;
 
@@ -9,7 +9,7 @@ class UserController extends Controller {
     console.log('login params  ', data);
     const user = await ctx.service.user.findUserByName(data.name);
     console.log('user:', user)
-    if (user?.user?.pass === data.pass) {
+    if (user?.user?.pass === data.pass) { // eslint-disable-line
       const token = app.jwt.sign(
         {
           nickname: data.name,

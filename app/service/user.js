@@ -1,6 +1,6 @@
 // app/service/user.js
 
-'use strict';
+'use strict'; // eslint-disable-line
 
 const Service = require('egg').Service;
 

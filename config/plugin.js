@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // eslint-disable-line
 
 /** @type Egg.EggPlugin */
 module.exports = {
@@ -17,5 +17,5 @@ module.exports = {
   mysql: {
     enable: true,
     package: 'egg-mysql',
-  }
+  },
 };
