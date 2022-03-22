@@ -7,7 +7,6 @@
     "declarations": true
   },
   "dependencies": {
-    "@commitlint/cli": "^16.2.3",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-jwt": "^3.1.7",
@@ -30,6 +29,7 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS",
       "pre-commit": "npm run lint"
     }
   },
