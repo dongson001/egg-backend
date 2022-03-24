@@ -12,7 +12,8 @@
     "egg-jwt": "^3.1.7",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.11.0",
-    "eslint-config-airbnb": "^19.0.4"
+    "eslint-config-airbnb": "^19.0.4",
+    "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

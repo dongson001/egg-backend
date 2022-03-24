@@ -39,7 +39,7 @@ class UserController extends Controller {
     if (user) {
       ctx.body = {
         code: 0,
-        data: user.user[0],
+        data: user[0],
       };
     }
   }

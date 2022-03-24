@@ -6,6 +6,10 @@
 module.exports = app => {
   const { router, controller, jwt } = app;
   router.get('/', jwt, controller.home.index);
+
+  // 验证码
+  router.get('/captcha', controller.utils.captcha);
+
   router.post('/user/login', controller.user.login);
   router.post('/user/info', jwt, controller.user.index);
   router.post('/user/add', jwt, controller.user.add);
