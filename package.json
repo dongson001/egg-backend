@@ -10,9 +10,14 @@
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-jwt": "^3.1.7",
+    "egg-mongoose": "^3.3.1",
     "egg-mysql": "^3.0.0",
+    "egg-router-group": "^1.1.0",
     "egg-scripts": "^2.11.0",
+    "egg-validate": "^2.0.2",
     "eslint-config-airbnb": "^19.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
     "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
@@ -30,7 +35,6 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS",
       "pre-commit": "npm run lint"
     }
   },

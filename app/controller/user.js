@@ -1,8 +1,55 @@
 'use strict'; // eslint-disable-line
 
-const { Controller } = require('egg');
+const BaseController = require('./base');
+const md5 = require('md5');
 
-class UserController extends Controller {
+const createRule = {
+  email: { type: 'email' },
+  nickname: { type: 'string' },
+  passwd: { type: 'string' },
+  captcha: { type: 'string' },
+};
+const HashSalt = 'dongsonkkb';
+class UserController extends BaseController {
+  async register() {
+    const { ctx } = this;
+    try {
+      // 验证传的参数
+      ctx.validate(createRule);
+    } catch (e) {
+      console.log('e:', e);
+      this.error('参数效验失败', e.error);
+    }
+    const {
+      email, nickname, passwd, captcha,
+    } = ctx.request.body;
+    console.log('email, nickname, passwd, captcha:', email, nickname, passwd, captcha)
+    if (captcha.toUpperCase() === ctx.session.captcha.toUpperCase()) {
+      if (await this.checkEmail(email)) {
+        this.error('邮箱重复了');
+      } else {
+        const ret = await ctx.model.User.create({
+          nickname,
+          email,
+          passwd: md5(passwd + HashSalt),
+        });
+        if (ret._id) {
+          this.message('注册成功');
+        } else {
+          console.log('ret:', ret);
+        }
+      }
+    } else {
+      this.error('验证码错误');
+    }
+  }
+
+  async checkEmail(email) {
+    console.log('this.ctx.model', this.ctx.model);
+    const user = await this.ctx.model.User.findOne({ email });
+    return user;
+  }
+
   async login() {
     const { ctx, app } = this;
     const data = ctx.request.body;

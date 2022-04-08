@@ -48,6 +48,12 @@ module.exports = appInfo => {
         enable: false,
       },
     },
+    mongoose: {
+      client: {
+        url: 'mongodb://127.0.0.1:27017/kkbhub',
+        options: {},
+      },
+    },
   };
 
 
