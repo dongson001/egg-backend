@@ -10,14 +10,18 @@ module.exports = app => {
   // 验证码
   router.get('/captcha', controller.utils.captcha);
 
+  // 邮箱验证码
+  router.get('/sendEmail', controller.utils.sendEmail);
+
   router.group(
     {
       name: 'user',
       prefix: '/user',
     },
     router => {
-      const { register } = controller.user;
+      const { register, login } = controller.user;
       router.post('/register', register);
+      router.post('/login', login);
     }
   );
 
