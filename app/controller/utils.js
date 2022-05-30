@@ -2,6 +2,7 @@
 
 const svgCaptcha = require('svg-captcha');
 const BaseController = require('./base');
+const path = require('path');
 const fse = require('fs-extra');
 
 class UtilsController extends BaseController {
@@ -38,15 +39,30 @@ class UtilsController extends BaseController {
     }
   }
 
+  async mergeFile() {
+    const { ctx } = this;
+    const { name, hash, ext } = ctx.request.body;
+    const filePath = path.join(this.config.UPLOAD_DIR, `${hash}.${ext}`);
+    console.log('name, hash, ext:', name, hash, ext);
+    await ctx.service.tools.mergeFile();
+    this.message('文件上传成功');
+  }
+
   async uploadFile() {
     const { ctx } = this;
     const file = ctx.request.files[0];
-    // const { name } = ctx.request.body;
+    const { name, hash } = ctx.request.body;
+    console.log('name, hash:', name, hash);
+    const chunkPath = path.join(this.config.UPLOAD_DIR, hash);
+    if (!fse.existsSync(chunkPath)) {
+      await fse.mkdir(chunkPath);
+    }
+
+    // const filePath = path.join(this.config.UPLOAD_DIR, name);
+
     // console.log('name:', name, file);
-    await fse.move(file.filepath, this.config.UPLOAD_DIR + '/' + file.filename);
-    this.message({
-      url: `/puliic/${file.filename}`,
-    });
+    await fse.move(file.filepath, `${chunkPath}/${name}`);
+    this.message('切片上传成功');
   }
 }
 

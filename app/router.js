@@ -16,6 +16,9 @@ module.exports = app => {
   // 文件上传
   router.post('/uploadFile', controller.utils.uploadFile);
 
+  // 文件merge
+  router.post('/mergeFile', controller.utils.mergeFile);
+
   router.group(
     {
       name: 'user',
