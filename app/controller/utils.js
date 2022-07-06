@@ -41,18 +41,18 @@ class UtilsController extends BaseController {
 
   async mergeFile() {
     const { ctx } = this;
-    const { name, hash, ext } = ctx.request.body;
+    const { hash, ext, size } = ctx.request.body;
     const filePath = path.join(this.config.UPLOAD_DIR, `${hash}.${ext}`);
-    console.log('name, hash, ext:', name, hash, ext);
-    await ctx.service.tools.mergeFile();
-    this.message('文件上传成功');
+    await ctx.service.tools.mergeFile(filePath, hash, size);
+    this.message({
+      url: `public/${hash}.${ext}`,
+    });
   }
 
   async uploadFile() {
     const { ctx } = this;
     const file = ctx.request.files[0];
     const { name, hash } = ctx.request.body;
-    console.log('name, hash:', name, hash);
     const chunkPath = path.join(this.config.UPLOAD_DIR, hash);
     if (!fse.existsSync(chunkPath)) {
       await fse.mkdir(chunkPath);

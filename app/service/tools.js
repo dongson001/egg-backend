@@ -2,6 +2,8 @@
 
 const { Service } = require('egg');
 const nodemailer = require('nodemailer');
+const path = require('path');
+const fse = require('fs-extra');
 
 const useremail = 'ldong2022@qq.com';
 const transporter = nodemailer.createTransport({
@@ -35,6 +37,35 @@ class ToolService extends Service {
       console.log('error:', error);
       return false;
     }
+  }
+
+  async mergeFile(filepath, hash, size) {
+    const chunkDir = path.resolve(this.config.UPLOAD_DIR, hash);
+    let chunks = await fse.readdir(chunkDir);
+    chunks = chunks.sort((a, b) => a.split('-')[1] - b.split('-')[1]);
+    chunks = chunks.map(cp => path.resolve(chunkDir, cp));
+    await this.mergeChunks(chunks, filepath, size);
+  }
+
+  async mergeChunks(files, dest, size) {
+    const pipStream = (filepath, writeStream) => new Promise(resolve => {
+      const readStream = fse.createReadStream(filepath);
+      readStream.on('end', () => {
+        fse.unlink(filepath);
+        resolve();
+      });
+      readStream.pipe(writeStream);
+    });
+
+    await Promise.all(
+      files.map((file, index) => {
+        console.log('file, index:', size ,file, index);
+        pipStream(file, fse.createWriteStream(dest, {
+          start: index * size,
+          end: (index + 1) * size,
+        }));
+      })
+    );
   }
 }
 
