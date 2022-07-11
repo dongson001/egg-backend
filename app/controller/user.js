@@ -150,6 +150,42 @@ class UserController extends BaseController {
       },
     };
   }
+
+  async nav() {
+    const { ctx } = this;    
+    ctx.body = {
+      code: 0,
+      data: [
+        {
+          name: '首页',
+          id: 1,
+          url: 'home',
+        },
+        {
+          name: '用户管理',
+          id: 100,
+          url: 'userList',
+          children: [
+            {
+              name: '用户列表',
+              id: 101,
+              url: 'userList',
+            },
+            {
+              name: '用户中心',
+              id: 102,
+              url: 'uc',
+            },
+          ],
+        },
+        {
+          name: 'xxxx',
+          id: 200,
+          url: 'home1',
+        },
+      ],
+    };
+  }
 }
 
 module.exports = UserController;

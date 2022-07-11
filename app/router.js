@@ -25,10 +25,12 @@ module.exports = app => {
       prefix: '/user',
     },
     router => {
-      const { register, login, info } = controller.user;
+      const { register, login, info, nav, list } = controller.user;
       router.post('/register', register);
       router.post('/login', login);
       router.post('/info', jwt, info);
+      router.post('/nav', jwt, nav);
+      router.post('/list', jwt, list);
     }
   );
 };
