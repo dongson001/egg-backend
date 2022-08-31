@@ -32,7 +32,7 @@ module.exports = appInfo => {
   config.mysql = {
     client: {
       // host
-      host: 'localhost',
+      host: '119.3.110.210',
       // 端口号
       port: '3306',
       // 用户名
@@ -48,6 +48,12 @@ module.exports = appInfo => {
     agent: false,
   };
 
+  config.cors = {
+    origin: '*',
+    allowMethods: 'get,post',
+    credentials: true,
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
@@ -58,7 +64,7 @@ module.exports = appInfo => {
     },
     mongoose: {
       client: {
-        url: 'mongodb://127.0.0.1:27017/kkbhub',
+        url: 'mongodb://119.3.110.210:27017/kkbhub',
         options: {},
       },
     },
